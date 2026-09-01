@@ -10,6 +10,17 @@ dashboard has three tabs:
 The generated page is a snapshot: it embeds the collected test and coverage data,
 so it can be opened or shared as a single HTML file.
 
+## LLM use
+
+The dashboard generation itself does not use an LLM, an API key, or a network
+service. Its Python scripts deterministically detect the project, run the test
+suite under coverage, parse Python source with the AST, compute scores, and
+render the HTML file.
+
+Codex is optional: when installed as a skill, it can read `SKILL.md` to run the
+workflow, help investigate errors, and summarize the result. The same scripts
+can always be run manually.
+
 ## Requirements
 
 - Python 3
@@ -38,6 +49,17 @@ your-project/
             ├── SKILL.md
             └── scripts/
 ```
+
+### Run with Codex
+
+Start a new Codex session from the project root, then invoke the skill with:
+
+```text
+$test-dashboard
+```
+
+The `$` form invokes a skill by name. It is not a `/test-dashboard` slash
+command; slash commands are reserved for Codex's built-in commands.
 
 Then run the scripts from the project root, passing their path explicitly:
 
@@ -73,8 +95,8 @@ mkdir -p ~/.codex/skills
 cp -R /path/to/test-dashboard ~/.codex/skills/test-dashboard
 ```
 
-Start a new Codex session after installation, then ask it to generate the test
-dashboard for the project you are working in.
+Start a new Codex session after installation, then invoke it with
+`$test-dashboard` from the project you are working in.
 
 The installed directory should look like this:
 
